@@ -1,9 +1,3 @@
-<?php 
-    $pdo = new PDO('mysql:host=localhost;dbname=cms','root','');
-    $sobre = $pdo->prepare("SELECT * FROM `tb_sobre`");
-    $sobre->execute();
-    $sobre = $sobre->fetch()['sobre'];
-?>
 <!doctype html>
 <html lang="pt-br">
 
@@ -19,7 +13,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="css/style.css">
 
-    <title>Painel frontender</title>
+    <title>Ta cu medo frontender</title>
 </head>
 
 <body>
@@ -82,31 +76,18 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <?php 
-                        if (isset($_POST['editar_sobre'])){
-                            $sobre = $_POST['sobre'];
-                            $pdo->exec("DELETE FROM `tb_sobre`");
-                            $sql = $pdo->prepare("INSERT INTO `tb_sobre` VALUES (null,?)");
-                            $sql->execute(array($sobre));
-                            $sobre = $pdo->prepare("SELECT * FROM `tb_sobre`");
-                            $sobre->execute();
-                            $sobre = $sobre->fetch()['sobre'];
-                            echo '<div class="alert alert-success" role="alert">O campo <b>Sobre<b> foi editado com sucesso!</div> ';
-                        }
-
-                     ?>
+                    
                     <div id="sobre_section" class="panel panel-default">
                         <div class="panel-heading cor-padrao">
                             <h3 class="panel-title">Sobre</h3>
                         </div>
                         <div class="panel-body">
-                            <form method="post">
+                            <form action="/action_page.php">
                                 <div class="form-group">
                                     <label for="code">Código HTML:</label>
-                                    <textarea name="sobre" style="height: 240px;resize: vertical;" class="form-control"><?php echo $sobre; ?></textarea>
+                                    <textarea name="code" style="height: 240px;resize: vertical;" class="form-control"></textarea>
                                 </div>
-                                <input type="hidden" name="editar_sobre" value="">
-                                <button type="submit" name="acao" class="btn btn-default cor-padrao">Salvar</button>
+                                <button type="submit" class="btn btn-default cor-padrao">Salvar</button>
                             </form>
                         </div>
                     </div>
@@ -116,7 +97,7 @@
                             <h3 class="panel-title">Cadastrar Equipe</h3>
                         </div>
                         <div class="panel-body">
-                            <form action="/action_page.php" method="post">
+                            <form action="/action_page.php">
                                 <div class="form-group">
                                     <label for="nome">Nome do membro:</label>
                                     <input type="text" name="nome" class="form-control">
