@@ -3,6 +3,8 @@
     $sobre = $pdo->prepare("SELECT * FROM `tb_sobre`");
     $sobre->execute();
     $sobre = $sobre->fetch()['sobre'];
+
+    $caminho_img = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].'img/';
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -92,6 +94,14 @@
                             $sobre->execute();
                             $sobre = $sobre->fetch()['sobre'];
                             echo '<div class="alert alert-success" role="alert">O campo <b>Sobre<b> foi editado com sucesso!</div> ';
+                        }else if(isset($_POST['cadastrar_equipe'])){
+                            $nome = $_POST['nome'];
+                            $descricao = $_POST['descricao'];
+                            $imagem = $caminho_img.$_POST['url_imagem'];
+                            $sql = $pdo->prepare("INSERT INTO `tb_equipe` VALUES (null,?,?,?)");
+                            $sql->execute(array($nome, $descricao, $imagem));
+                            echo '<div class="alert alert-success" role="alert">O campo <b>Equipe<b> foi editado com sucesso!</div> ';
+
                         }
 
                      ?>
@@ -116,13 +126,16 @@
                             <h3 class="panel-title">Cadastrar Equipe</h3>
                         </div>
                         <div class="panel-body">
-                            <form action="/action_page.php" method="post">
+                            <form method="post">
                                 <div class="form-group">
                                     <label for="nome">Nome do membro:</label>
                                     <input type="text" name="nome" class="form-control">
+                                    <label for="url_imagem">Nome da imagem (upada em <b>/img</b>):</label>
+                                    <input type="text" name="url_imagem" class="form-control">
                                     <label for="code">Descrição do membro:</label>
-                                    <textarea name="code" style="height: 140px;resize: vertical;" class="form-control"></textarea>
+                                    <textarea name="descricao" style="height: 140px;resize: vertical;" class="form-control"></textarea>
                                 </div>
+                                <input type="hidden" name="cadastrar_equipe">
                                 <button type="submit" class="btn btn-default cor-padrao">Salvar</button>
                             </form>
                         </div>
@@ -144,12 +157,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php 
+                                        $selecionarMembros = $pdo->prepare("SELECT `id`,`nome` FROM `tb_equipe`");
+                                        $selecionarMembros->execute();
+                                        $membros = $selecionarMembros->fetchAll();
+                                        foreach($membros as $key=>$value){ 
+                                     ?>
                                     <tr>
-                                      <th>1</th>
-                                      <th>carlin</th>
-                                      <th><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Excluir</button></th>
+                                      <th><?php print $value['id']; ?></th>
+                                      <th><?php print $value['nome']; ?></th>
+                                      <th><button id_membro="<?php print $value['id']; ?>" type="submit" class="deletar-membro btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Excluir</button></th>
                                     </tr>
-                                    <tr>
+                                <?php } ?>
+                                    <!-- <tr>
                                         <th>2</th>
                                         <th>duardin</th>
                                         <th><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Excluir</button></th>
@@ -158,7 +178,7 @@
                                         <th>3</th>
                                         <th>roquero maluco</th>
                                         <th><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Excluir</button></th>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>

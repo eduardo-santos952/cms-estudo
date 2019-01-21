@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 18-Jan-2019 às 21:12
+-- Generation Time: 21-Jan-2019 às 21:25
 -- Versão do servidor: 10.1.36-MariaDB
 -- versão do PHP: 7.2.11
 
@@ -31,8 +31,16 @@ SET time_zone = "+00:00";
 CREATE TABLE `tb_equipe` (
   `id` int(11) NOT NULL,
   `nome` text NOT NULL,
-  `descricao` text NOT NULL
+  `descricao` text NOT NULL,
+  `url_imagem` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_equipe`
+--
+
+INSERT INTO `tb_equipe` (`id`, `nome`, `descricao`, `url_imagem`) VALUES
+(16, 'eduardo', 'DSSDFDSFDSFDSFDSFDSFDS', 'http://localhost/cms-front/img/eduardo.png');
 
 -- --------------------------------------------------------
 
@@ -44,6 +52,13 @@ CREATE TABLE `tb_sobre` (
   `id` int(11) NOT NULL,
   `sobre` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_sobre`
+--
+
+INSERT INTO `tb_sobre` (`id`, `sobre`) VALUES
+(4, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
 
 --
 -- Indexes for dumped tables
@@ -69,13 +84,13 @@ ALTER TABLE `tb_sobre`
 -- AUTO_INCREMENT for table `tb_equipe`
 --
 ALTER TABLE `tb_equipe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tb_sobre`
 --
 ALTER TABLE `tb_sobre`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -22,6 +22,20 @@ $(function(){
             return false;
     })
 }
+
+    $('button.deletar-membro').click(function(){
+        var id_membro = $(this).attr('id_membro');
+        var el = $(this).parent().parent();
+        $.ajax({
+            method:'post',
+            data:{'id_membro':id_membro},
+            url:'delete.php'
+        }).done(function(){
+            el.fadeOut(function(){
+                el.remove();
+            });
+        })
+    })
     
 
 });
